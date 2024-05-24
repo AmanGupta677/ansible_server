@@ -1,0 +1,25 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install updates
+    tags: always
+    yum:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "Amazon" or ansible_distribution == "Amazon Linux"
+
+- hosts: web_servers
+  become: true
+  tasks: 
+
+  - name: install apache & php packages
+    tags: apache,ubuntu,apache2
+    package: 
+      name: 
+         - "{{ apache_package }}"
+         - "{{ php_package }}"
+      state: latest
+      update_cache: yes
