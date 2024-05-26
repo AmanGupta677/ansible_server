@@ -1,3 +1,6 @@
 [web_servers]
-172.31.1.176 apache_package=httpd php_package=php
-172.31.3.189 apache_package=httpd php_package=php
+172.31.1.176
+172.31.3.189 
+
+[localhost]
+172.31.3.100
