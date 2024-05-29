@@ -2,14 +2,14 @@
   tags: apache,ubuntu,apache2
   package:
       name:
-         - httpd
-         - php
+         - "{{ apache_package_name}}"
+         - "{{ php_package_name}}"
       state: latest
 
 - name: start httpd
   tags: apache,centos,httpd
   service:
-      name: httpd
+      name: "{{ apache_service }}"
       state: started
       enabled: yes
 
@@ -18,15 +18,8 @@
   lineinfile:
       path: /etc/httpd/conf/httpd.conf
       regexp: '^ServerAdmin'
-      line: ServerAdmin somebody@somewhere.net
-  register: httpd
-
-- name: restart httpd
-  tags: apache,httpd
-  service:
-      name: httpd
-      state: restarted
-  when: httpd.changed
+      line: ServerAdmin somebody@somewhere.com
+  notify: restart_apache
 
 - name: copy html file for site
   tags: apache,apache2,httpd
